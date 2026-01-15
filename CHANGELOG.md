@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Performance 🚀
 
-- Setup time maintained: 20-45s (cached), 1.5-2.5 min (first run)
+- Setup time: ~25-55s (cached), ~1.5-3 min (first run)
 - Cache hit rate >95% across all platforms
 - Optimized for both GitHub-hosted and self-hosted runners
 - Platform-specific optimizations (fastest on Linux, fully functional on all)
@@ -55,6 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New: UPGRADE.md** - Quick v1→v2 upgrade reference
 - **Enhanced: README.md** - Updated with v2 features and examples
 - **Enhanced: FILE_SUMMARY.md** - Complete package overview
+- **Updated: Performance Metrics** - Revised execution times based on latest benchmarks
+- **Added: Windows Warnings** - Added performance expectations for Windows runners
 
 ### Testing 🧪
 
