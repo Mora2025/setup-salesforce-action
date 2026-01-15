@@ -597,12 +597,12 @@ jobs:
 
 ## ⚡ Performance Comparison
 
-| Configuration      | Tools                 | Cache Hit | Cache Miss |
-| ------------------ | --------------------- | --------- | ---------- |
-| Minimal            | CLI only              | 20s       | 1.5 min    |
-| Recommended        | CLI + delta + scanner | 35s       | 2 min      |
-| Full Stack         | All tools             | 45s       | 2.5 min    |
-| CLI Only (no auth) | CLI + plugins         | 25s       | 1.8 min    |
+| Configuration  | Tools                 | Cache Hit | Cache Miss |
+| -------------- | --------------------- | --------- | ---------- |
+| Minimal        | CLI only              | ~25s      | ~1.5 min   |
+| Recommended    | CLI + delta + scanner | ~55s      | ~2 min     |
+| Full Stack     | All tools             | ~55s      | ~2.5 min   |
+| Custom Plugins | CLI + heavy plugins   | ~95s      | ~3 min     |
 
 **Why so fast?**
 
@@ -611,6 +611,9 @@ jobs:
 - Parallel npm operations
 - No redundant downloads
 - Platform-specific optimizations
+
+> [!NOTE]
+> Windows runners on GitHub Actions are **notoriously slower** due to file system differences and lower I/O performance. Expect execution times to be **2-3x longer** on Windows compared to Ubuntu or macOS. We highly recommend using Ubuntu runners for your primary CI/CD pipelines for best performance.
 
 ---
 
@@ -625,7 +628,7 @@ jobs:
 
 | Feature               | This Action (v2) | Manual Setup | Salesforce Official |
 | --------------------- | ---------------- | ------------ | ------------------- |
-| Setup Time (cached)   | 20-45s           | N/A          | 60-90s              |
+| Setup Time (cached)   | 25s - 1.5m       | N/A          | 60-90s              |
 | Cross-Platform        | ✅ Win/Mac/Linux | ✅           | ⚠️ Limited          |
 | JWT Auth Built-in     | ✅               | ❌           | ❌                  |
 | Optional Plugins      | ✅               | ❌           | ❌                  |

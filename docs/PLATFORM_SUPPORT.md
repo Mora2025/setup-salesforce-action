@@ -325,9 +325,12 @@ Typical action execution times (with cache):
 
 | Platform | CLI Install | With Tools | First Run (no cache) |
 | -------- | ----------- | ---------- | -------------------- |
-| Ubuntu   | 8-12s       | 15-20s     | 40-50s               |
-| Windows  | 12-18s      | 20-28s     | 55-70s               |
-| macOS    | 15-22s      | 25-35s     | 80-100s              |
+| Ubuntu   | ~25s        | ~55s       | ~1.5 min             |
+| macOS    | ~40s        | ~2 min     | ~3.5 min             |
+| Windows  | ~45s        | ~3 min+    | ~5 min+              |
+
+> [!NOTE]
+> Windows runners on GitHub Actions are **notoriously slower** due to file system differences and lower I/O performance. Expect execution times to be **2-3x longer** (or more) on Windows compared to Ubuntu or macOS. We highly recommend using Ubuntu runners for your primary CI/CD pipelines for best performance.
 
 **Factors affecting performance:**
 

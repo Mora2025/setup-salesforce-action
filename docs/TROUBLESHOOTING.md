@@ -503,7 +503,12 @@ Installing tools... (taking forever)
 
 **Optimization**:
 
-1. **Only install needed tools**:
+1. **Are you using a Windows runner?**
+   Windows runners on GitHub Actions have significantly slower I/O than Linux.
+
+   - **Solution**: Switch to `runs-on: ubuntu-latest` if cross-platform support isn't strictly required.
+
+2. **Only install needed tools**:
 
 ```yaml
 # Don't install everything

@@ -320,7 +320,7 @@ Settings → Branches → Add rule:
 ### 5. Choose the Right Platform
 
 - **Ubuntu**: Fastest, most cost-effective (recommended)
-- **Windows**: If you need Windows-specific tooling
+- **Windows**: If you need Windows-specific tooling **(expect 2-3x slower execution)**
 - **macOS**: If your team uses Macs primarily
 
 See [PLATFORM_SUPPORT.md](PLATFORM_SUPPORT.md) for details.
