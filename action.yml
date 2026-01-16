@@ -476,9 +476,9 @@ runs:
           echo "  ⚠️  Windows runner detected - this is experimental and not recommended"
           echo "  ⚠️  Use ubuntu-latest for production Salesforce CI/CD workflows"
           echo "  Setting Windows file permissions..."
-          # Use GITHUB_ACTOR as fallback since USERNAME may not be reliable
-          icacls jwt.key /inheritance:r
-          icacls jwt.key /grant:r "${GITHUB_ACTOR}:(R)"
+          # Windows: Use the current user (works on GitHub Actions runners)
+          icacls jwt.key /inheritance:r 2>nul || true
+          icacls jwt.key /grant:r "$env:USERNAME:(R)" 2>nul || true
         else
           echo "  Setting file permissions..."
           chmod 600 jwt.key
