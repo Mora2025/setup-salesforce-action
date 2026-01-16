@@ -21,7 +21,7 @@ Most Salesforce pipelines fail due to:
 - ❌ Fragile auth handling
 - ❌ One-size-fits-all workflows
 
-  This action solves those problems by providing a **stable execution layer** that workflows can reliably depend on.
+This action solves those problems by providing a **stable execution layer** that workflows can reliably depend on.
 
 ## ✨ Key Capabilities
 
