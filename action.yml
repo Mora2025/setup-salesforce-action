@@ -601,12 +601,13 @@ runs:
         echo "🔐 Authenticating via Direct Access Token..."
         echo "  ⚠️ WARNING: Access tokens are short-lived and recommended for advanced use only"
         echo "  ⚠️ For production workflows, use JWT or SFDX Auth URL authentication"
+        echo "  Instance URL: ${{ inputs.instance_url }}"
+        echo "  Alias: ${{ inputs.alias }}"
 
-        sf org login access-token \
+        echo "$ACCESS_TOKEN" | sf org login access-token \
           --instance-url "${{ inputs.instance_url }}" \
           --alias ${{ inputs.alias }} \
-          --no-prompt \
-          --stdin <<< "$ACCESS_TOKEN"
+          --no-prompt
 
         # Add dev hub or default flag
         if [ "${{ inputs.is_dev_hub }}" = "true" ]; then
