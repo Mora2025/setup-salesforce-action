@@ -113,7 +113,7 @@ jobs:
 
       - name: Verify Dev Hub Setting
         run: |
-          DEV_HUB=$(sf config get target-dev-hub --json | jq -r '.result[0].value // .result.value // empty')
+          DEV_HUB=$(sf config get target-dev-hub --json 2>/dev/null | jq -r 'if .result | type == "array" then .result[0].value else .result.value end // empty')
 
           if [ -z "$DEV_HUB" ]; then
             echo "❌ Dev Hub not set"
@@ -270,7 +270,7 @@ jobs:
             exit 1
           fi
 
-          DEFAULT_ORG=$(sf config get target-org --json | jq -r '.result[0].value // .result.value // empty')
+          DEFAULT_ORG=$(sf config get target-org --json 2>/dev/null | jq -r 'if .result | type == "array" then .result[0].value else .result.value end // empty')
 
           if [ "$DEFAULT_ORG" != "AccessTokenOrg" ]; then
             echo "❌ Default org not set correctly. Got: $DEFAULT_ORG"
