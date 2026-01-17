@@ -105,7 +105,7 @@ Full documentation lives in `/docs`:
 
 - 📖 [Action Overview](docs/OVERVIEW.md)
 - 🚀 [Quick Start Guide](docs/QUICKSTART.md)
-- 🔄 [Migration Guide](docs/MIGRATION_V1_TO_V2.md)
+- 🔄 [Migration Guide](docs/MIGRATION.md)
 - 🧪 [Testing Strategy](docs/TESTING_STRATEGY.md)
 - 🖥️ [Platform Support](docs/PLATFORM_SUPPORT.md)
 - 🔧 [Troubleshooting](docs/TROUBLESHOOTING.md)

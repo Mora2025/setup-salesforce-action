@@ -5,51 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.0] - 2026-01-15
+## [2.2.0] - 2026-01-17
 
-### Added - Multiple Authentication Methods 🔐
+### 🚀 New Features - Performance & Caching
 
-- **SFDX Auth URL authentication** (`auth_method: 'sfdx-url'`)
+- **OS-specific cache configuration** - Cache paths are now separated by operating system to prevent conflicts
+  - Unix (Linux/macOS): `~/.npm`, `~/.local/share/sf`, `~/.cache/node-gyp`
+  - Windows: `~/AppData/Local/sf`, `~/AppData/Roaming/npm`
+  - _Note: This change will force a one-time cache miss (expect ~2m setup time on first run)_
 
-  - Simpler alternative to JWT - no certificate required
-  - Uses refresh token from SFDX Auth URL
-  - New input: `sfdx_auth_url`
+- **Cache key generation optimized** - Version resolution now uses `npm view @salesforce/cli version` instead of installing CLI
+  - Faster cache key generation
+  - Includes 10s timeout protection against network hangs
 
-- **Access Token authentication** (`auth_method: 'access-token'`)
+### Added - Reliability Improvements 🛡️
 
-  - Direct access token authentication for advanced use cases
-  - New input: `access_token`
-  - Warning: Access tokens are short-lived
+- **Plugin installation retry logic** - All plugin installs now have 3-attempt retry with exponential backoff
+  - `sfdx-git-delta`: Retries on transient npm/network failures
+  - `@salesforce/plugin-code-analyzer`: Retries on transient failures
+  - Custom plugins: Each plugin retries individually
 
-- **New `auth_method` input** to select authentication type
-  - Options: `jwt` (default), `sfdx-url`, `access-token`
-  - Backward compatible - existing JWT workflows work unchanged
-
-### Added - Cache Granularity Control ⚡
-
-- **New `cli_version_for_cache` input** to control cache key granularity
-  - `major` - Cache busts only on major CLI version changes
-  - `minor` - Cache busts on minor version changes (default)
-  - `exact` - Cache busts on every CLI version change
-  - Improves cache hit rates for teams using `cli_version: 'latest'`
-
-### Added - New Outputs 📊
-
-- **`api_version`** - Salesforce API version for the authenticated org
-- **`auth_performed`** - Whether authentication was performed (`true`/`false`)
+- **Cross-platform hash command detection** - Automatically uses `sha256sum` or `shasum -a 256` based on availability
 
 ### Changed - Improvements
 
-- Cache key format updated to `sf-v3-*` for new cache strategy
-- Improved sandbox and scratch org detection logic
-- Better logging with tree-formatted output
-- Environment variables used for sensitive auth data (more secure)
+- **Workflow renamed** from "Quick Tests" to "Functional Tests"
+- **Improved plugin verification** - Uses `jq` regex matching instead of simple `grep` (handles plugin name variations)
+- **Improved CLI validation** - Uses `sf plugins` instead of `sf plugins --core`
+- **Renamed `test-network-retry` to `test-cli-install-retry`** - Better reflects purpose
+- **Fixed `test-invalid-plugins`** - Removed "valid-plugin" (not a real npm package)
+- **Access Token Auth Default** - `allow_access_token_auth` now defaults to `true` (making this a non-breaking release)
+- Cache key format: `sf-v3-*` (unchanged from v2.1)
+
+### Added - New Tests 🧪
+
+- **`test-access-token-auth`** - Tests access token authentication flow
+- **`test-multiple-plugins`** - Tests installing multiple custom plugins at once
 
 ### Fixed 🐞
 
 - Custom plugin installation loop now correctly installs plugins
+- Cache behavior test now informational-only (cache-hit not reliably detectable in composite actions)
+- Source flags verification now checks for exact `--source-dir <dir>` format
+- Cross-platform plugin verification in `test-cross-platform.yml` (uses proper regex matching)
+- **npm view timeout protection** - Cache key generation now has 10s timeout to prevent hangs
+- **LWC Jest version warning** - Added in-code comment warning about global install version risks
+- **.gitignore updated** - Temporary auth files (`authurl.txt`, `access_token.txt`) now ignored
+- **Access token URL fix** - Instance URL now strips trailing slash to prevent auth URL issues
+- **Removed unused GITHUB_ENV export** - `SF_SOURCE_FLAGS` env var removed (use `source_flags` output)
 
 ---
+
+## [2.1.0] - 2026-01-15
+
+### Added
+
+- Multiple authentication methods (JWT, SFDX URL, Access Token)
+- Cache granularity control (`cli_version_for_cache`)
+- New outputs: `api_version`, `auth_performed`
+
+### Fixed
+
+- Custom plugin installation loop
 
 ## [2.0.1] - 2026-01-15
 
@@ -104,9 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New: TESTING_STRATEGY.md** - Complete testing documentation
 - **New: QUICKSTART.md** - Get started in 15 minutes
 - **New: TROUBLESHOOTING.md** - Enhanced troubleshooting guide
-- **New: UPGRADE.md** - Quick v1→v2 upgrade reference
 - **Enhanced: README.md** - Updated with v2 features and examples
-- **Enhanced: FILE_SUMMARY.md** - Complete package overview
 - **Updated: Performance Metrics** - Revised execution times based on latest benchmarks
 - **Added: Windows Warnings** - Added performance expectations for Windows runners
 
@@ -126,7 +141,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simply change `@v1` to `@v2` in your workflows
 - All v1 inputs and outputs continue to work
 - New features are opt-in via new input parameters
-- See [MIGRATION_V1_TO_V2.md](MIGRATION_V1_TO_V2.md) for details
+- See [MIGRATION.md](MIGRATION.md) for details
 
 ---
 
@@ -202,6 +217,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.0.0]: https://github.com/rdbumstead/setup-salesforce-action/releases/tag/v3.0.0
 [2.1.0]: https://github.com/rdbumstead/setup-salesforce-action/releases/tag/v2.1.0
 [2.0.1]: https://github.com/rdbumstead/setup-salesforce-action/releases/tag/v2.0.1
 [2.0.0]: https://github.com/rdbumstead/setup-salesforce-action/releases/tag/v2.0.0
