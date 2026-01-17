@@ -614,10 +614,10 @@ runs:
         # Add dev hub or default flag
         if [ "${{ inputs.is_dev_hub }}" = "true" ]; then
           echo "  🔧 Setting as Dev Hub..."
-          sf config set target-dev-hub=${{ inputs.alias }}
+          sf config set target-dev-hub=${{ inputs.alias }} --global
         else
           echo "  🔧 Setting as default org..."
-          sf config set target-org=${{ inputs.alias }}
+          sf config set target-org=${{ inputs.alias }} --global
         fi
 
         echo "✅ Access Token authentication successful"

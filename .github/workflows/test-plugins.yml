@@ -98,7 +98,7 @@ jobs:
       - name: Execute Commands
         run: |
           echo "Testing sfdx-hardis execution..."
-          sf hardis --version
+          sf hardis:auth:login --help
           echo "✅ sfdx-hardis command executed"
 
           echo ""
