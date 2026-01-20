@@ -1,11 +1,17 @@
 name: Test Invariants
 
 on:
-  workflow_dispatch:
-  pull_request:
+  push:
+    branches: [main, develop]
     paths:
       - "action.yml"
       - ".github/workflows/test-invariants.yml"
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "action.yml"
+      - ".github/workflows/test-invariants.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
