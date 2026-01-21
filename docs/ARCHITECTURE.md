@@ -281,13 +281,6 @@ These outputs are **stable interfaces**. Changes require major version bumps.
 | `used_default_cli_version` | boolean | True if default CLI version used     |
 | `used_default_api_version` | boolean | True if API version auto-detected    |
 
-#### Forward Compatibility Outputs (v4 Prep)
-
-| Output             | Type        | Description                                   |
-| ------------------ | ----------- | --------------------------------------------- |
-| `cli_binary_path`  | string      | Absolute path to `sf` executable              |
-| `validated_config` | JSON string | Structured summary of effective configuration |
-
 ### Guaranteed Invariants
 
 On successful completion, the action **guarantees**:
@@ -490,14 +483,16 @@ git push origin v3 --force
 
 ### Deprecation Process
 
-1. **v3.1.0**: Add deprecation warning to logs
-2. **v3.2.0** onward: Continue warning for 6 months
-3. **v4.0.0**: Remove deprecated feature, update migration guide
+> **Note**: With the v4 modular architecture now cancelled, the action will continue to evolve through incremental v3.x releases. Any deprecated features will be removed in future major versions only when necessary.
+
+1. **v3.x.0**: Add deprecation warning to logs
+2. **v3.x.0** onward: Continue warning for 6 months minimum
+3. **Future major version**: Remove deprecated feature only if necessary, update migration guide
 
 Example warning:
 
 ```
-⚠️  DEPRECATION WARNING: Input 'sfdx_version' is deprecated and will be removed in v4.0.0.
+⚠️  DEPRECATION WARNING: Input 'sfdx_version' is deprecated.
    Use 'cli_version' instead. See: https://github.com/rdbumstead/setup-salesforce-action/blob/main/docs/MIGRATION.md
 ```
 
@@ -653,11 +648,11 @@ Types: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`
 
 ### Action-Specific
 
-| Limitation                                 | Reason                     | Future Plan                      |
-| ------------------------------------------ | -------------------------- | -------------------------------- |
-| No multi-org authentication in single step | Architectural simplicity   | v4 may support via modules       |
-| API version always auto-detected           | Salesforce CLI behavior    | v5 may add override input        |
-| No support for proxy configuration         | Out of scope for primitive | Document user-side configuration |
+| Limitation                                 | Reason                     | Future Plan                            |
+| ------------------------------------------ | -------------------------- | -------------------------------------- |
+| No multi-org authentication in single step | Architectural simplicity   | Not planned (out of scope)             |
+| API version always auto-detected           | Salesforce CLI behavior    | May add override input in future minor |
+| No support for proxy configuration         | Out of scope for primitive | Document user-side configuration       |
 
 ---
 
@@ -1109,26 +1104,27 @@ Use `@vercel/ncc` to compile everything into a single file:
 
 ### ADR-002: Monolithic vs Modular Architecture
 
-**Status**: Decided (v3 Monolith, v4 Internal Modular)
+**Status**: Decided (v3 Monolith, v4 Cancelled)
 
-**Context**: The action has grown to ~1,200 lines.
+**Context**: The action has grown to ~1,200 lines. A modular v4 architecture was considered.
 
-**Decision**:
+**Decision** (Updated Jan 2026):
 
-- v3: Ship as monolith with forward-compatibility outputs
-- v4: Refactor to internal modules using strangler pattern
+- v3: Ship and maintain as stable monolith
+- v4 modular architecture: **Cancelled**
 
 **Rationale**:
 
-- Premature modularization is worse than size
-- Internal modularization avoids user friction
-- Forward compatibility outputs (`cli_binary_path`, `validated_config`) prepare for v4
+- The action serves as a stable primitive for Salesforce CI/CD workflows
+- Modularization would add unnecessary complexity for current users
+- Backward compatibility and maintenance stability are higher priorities
+- The monolithic structure is appropriate for a CLI orchestration wrapper
 
 **Consequences**:
 
-- v3 is larger but stable
-- v4 migration path is defined
-- Users experience zero disruption
+- v3 will continue to receive incremental improvements via minor/patch releases
+- No migration path needed - users continue with stable v3.x releases
+- Future enhancements will be additive within the monolithic structure
 
 ---
 
